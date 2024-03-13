@@ -11,10 +11,19 @@
         <a href={% url "crear_empleado" %}>Nuevo Empleado</a>
     </nav>
     <h1>Lista de empleados:</h1>
+    
+    <form action={% url "empleados" %}>
+    {{formulario}}
+    <input type="submit" value="Buscar">
+    </form>
+    {% if empleadoslista %}
     <ul>
         {% for empleado in empleadoslista %}
         <li>{{empleado}}</li>
         {% endfor %}
     </ul>
+    {% else %}
+    <p>No existe Empleado con ese nombre.</p>
+    {% endif %}
 </body>
 </html>

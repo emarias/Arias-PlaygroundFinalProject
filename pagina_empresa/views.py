@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
 from pagina_empresa.models import Empleado
-from pagina_empresa.forms import FormularioNuevoEmpleado
+from pagina_empresa.forms import FormularioNuevoEmpleado, BusquedaEmpleado
 
 def inicio(request):
     return render(request,'inicio.html')
@@ -22,5 +22,10 @@ def crear_empleado(request):
     return render(request, "crear_empleado.html", {'formulario':formulario})
 
 def empleados(request):
-    empleadoslista = Empleado.objects.all()
-    return render(request,'empleados.html', {'empleadoslista':empleadoslista})
+    
+    formulario = BusquedaEmpleado(request.GET)
+    if formulario.is_valid():
+        busqueda = formulario.cleaned_data.get("nombre")
+        empleadoslista = Empleado.objects.filter(nombre__icontains=busqueda)
+        
+    return render(request,'empleados.html', {'empleadoslista':empleadoslista, 'formulario':formulario})
