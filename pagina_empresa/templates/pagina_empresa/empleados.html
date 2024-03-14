@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+    
+    {% block h1_header %}
+    Lista de empleados
+    {% endblock h1_header %}
+    
+    {% block main %}
+    <form action={% url "empleados" %}>
+    {{formulario}}
+    <input type="submit" value="Buscar">
+    </form>
+    {% if empleadoslista %}
+    <ul>
+        {% for empleado in empleadoslista %}
+        <li>{{empleado}} 
+            | <a href={% url "ver_empleado" empleado.id  %}>Info</a> 
+            | <a href={% url "eliminar_empleado" empleado.id  %}>Eliminar</a></li>
+            |<a href={% url "editar_empleado" empleado.id  %}>Editar</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No existe Empleado con ese nombre.</p>
+    {% endif %}
+    {% endblock main %}
+    {% block section %}{% endblock section %}
