@@ -64,3 +64,6 @@ def editar_empleado(request, id_empleado):
 def ver_empleado(request,id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
     return render(request, 'pagina_empresa/ver_empleado.html', {'empleado':empleado})
+
+def about(request):
+    return render(request, 'pagina_empresa/acercaDeMi.html', {})
