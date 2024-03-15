@@ -13,5 +13,5 @@ class AutosLista(ListView):
 class PedirAuto(CreateView):
     model = Autos
     template_name = "autos/conseguir_auto.html"
-    fields = ['modelo', 'color', 'marca', 'fecha_de_fabricacion']
+    fields = ['modelo', 'color', 'marca', 'fecha_de_fabricacion','descripcion']
     success_url = reverse_lazy('autos')

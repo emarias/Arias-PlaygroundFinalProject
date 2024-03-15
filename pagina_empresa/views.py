@@ -17,7 +17,8 @@ def crear_empleado(request):
             apellido = formulario.cleaned_data.get("apellido")
             edad = formulario.cleaned_data.get("edad")
             sector = formulario.cleaned_data.get("sector")
-            empleado = Empleado(nombre=nombre, apellido=apellido, edad=edad, sector=sector)
+            sobre_mi = formulario.cleaned_data.get("sobre_mi")
+            empleado = Empleado(nombre=nombre, apellido=apellido, edad=edad, sector=sector, sobre_mi=sobre_mi)
             empleado.save()
             return redirect("empleados")
     return render(request, "pagina_empresa/crear_empleado.html", {'formulario':formulario})
@@ -38,7 +39,7 @@ def eliminar_empleado(request, id_empleado):
     
 def editar_empleado(request, id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
-    formulario = FormularioEditarEmpleado(initial= {'nombre':empleado.nombre, 'apellido': empleado.apellido, 'edad': empleado.edad, 'sector': empleado.sector })
+    formulario = FormularioEditarEmpleado(initial= {'nombre':empleado.nombre, 'apellido': empleado.apellido, 'edad': empleado.edad, 'sector': empleado.sector, 'sobre_mi':empleado.sobre_mi })
     
     if request.method == "POST":
         formulario = FormularioEditarEmpleado(request.POST)
@@ -49,6 +50,7 @@ def editar_empleado(request, id_empleado):
             empleado.apellido = nueva_info.get("apellido")
             empleado.edad = nueva_info.get("edad")
             empleado.sector = nueva_info.get("sector")
+            empleado.sobre_mi = nueva_info.get("sobre_mi")
             
             empleado.save()
             return redirect('empleados')

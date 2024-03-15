@@ -15,7 +15,7 @@
         <li>{{empleado}} 
             | <a href={% url "ver_empleado" empleado.id  %}>Info</a> 
             | <a href={% url "eliminar_empleado" empleado.id  %}>Eliminar</a></li>
-            |<a href={% url "editar_empleado" empleado.id  %}>Editar</a></li>
+            | <a href={% url "editar_empleado" empleado.id  %}>Editar</a></li>
         {% endfor %}
     </ul>
     {% else %}
