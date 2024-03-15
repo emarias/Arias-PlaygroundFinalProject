@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+    {% block header %}
+    <h1>Sacar Auto</h1>
+    {% endblock header %}
+
+    {% block main %}
+    <form action={% url "SacarAuto" autos.id %} method="POST">
+        {% csrf_token %}
+        <p>¿Desea confirmar sacar el auto {{autos}}?</p>
+        <input type="submit" value="Confirmar">
+    </form>
+    {% endblock main %}
