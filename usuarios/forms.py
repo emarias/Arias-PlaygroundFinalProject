@@ -15,10 +15,11 @@ class CreacionDeUsuario(UserCreationForm):
 class EditarPerfil(UserChangeForm):
     email = forms.EmailField(label="Editar el Email")
     first_name = forms.CharField(label="Nombre")
-    last_name= forms.CharField(label="Apellido")
+    last_name = forms.CharField(label="Apellido")
+    avatar = forms.ImageField(required=False)
     password = None
     
     class Meta:
         model = User
-        fields = ['email','first_name','last_name']
+        fields = ['email','first_name','last_name','avatar']
     
