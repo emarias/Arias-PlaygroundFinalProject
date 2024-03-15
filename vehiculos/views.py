@@ -5,11 +5,28 @@ from django.views.generic.detail import DetailView
 from vehiculos.models import Autos
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from vehiculos.forms import BusquedaAuto
 
 class AutosLista(ListView):
     model = Autos
     context_object_name = 'autos'
     template_name = "autos/autos.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        formulario = BusquedaAuto(self.request.GET)
+        
+        if formulario.is_valid():
+            texto_busqueda = formulario.cleaned_data.get("nombre")
+            if texto_busqueda:
+                queryset = queryset.filter(marca__icontains=texto_busqueda)
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formulario'] = BusquedaAuto(self.request.GET)
+        return context
 
     
 class PedirAuto(LoginRequiredMixin,CreateView):

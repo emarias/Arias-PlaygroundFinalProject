@@ -1,29 +1,28 @@
 {% extends "base.html" %}
     
-    {% block h1_header %}
-    Lista de Autos
-    {% endblock h1_header %}
+{% block h1_header %}
+Lista de Autos
+{% endblock h1_header %}
     
-    {% block main %}
-    <a href={% url "PedirAuto" %}>Trabajas con nosotros? Pide tu Auto!</a>
-    {% comment "" %}
-    <form action={% url "PedirAuto" %}>
-    {{formulario}}
-    <input type="submit" value="Buscar">
-    </form>{% endcomment %}
-    {% if autos %}
-    <ul>
-        {% for auto in autos %}
-        <li>{{auto}} 
+{% block main %}
+<a href={% url "PedirAuto" %}>Trabajas con nosotros? Pide tu Auto!</a>
+    
+<form action="" method="GET">
+{{ formulario }}
+<input type="submit" value="Buscar">
+</form>
 
-            |<a href={% url "DetallesAuto" auto.id  %}>Detalles</a></li>
-            |<a href={% url "SacarAuto" auto.id %}>Eliminar</a></li>
-            |<a href={% url "EditarAuto" auto.id  %}>Editar</a></li>
- 
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No existe Auto con ese nombre.</p>
-    {% endif %}
-    {% endblock main %}
-    {% block section %}{% endblock section %}
+{% if autos %}
+<ul>
+    {% for auto in autos %}
+    <li>{{ auto }} 
+        |<a href={% url "DetallesAuto" auto.id  %}>Detalles</a></li>
+        |<a href={% url "SacarAuto" auto.id %}>Eliminar</a></li>
+        |<a href={% url "EditarAuto" auto.id  %}>Editar</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No hay Auto con esa marca.</p>
+{% endif %}
+{% endblock main %}
+{% block section %}{% endblock section %}
