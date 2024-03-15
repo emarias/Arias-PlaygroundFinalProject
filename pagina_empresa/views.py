@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from django.template import Template, Context
 from pagina_empresa.models import Empleado
 from pagina_empresa.forms import FormularioNuevoEmpleado, BusquedaEmpleado, FormularioEditarEmpleado
+from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     return render(request,'pagina_empresa/inicio.html')
     #return render(request,'base.html')
 
+@login_required
 def crear_empleado(request):
     formulario = FormularioNuevoEmpleado()
     if request.method == "POST":
@@ -32,11 +34,13 @@ def empleados(request):
         
     return render(request,'pagina_empresa/empleados.html', {'empleadoslista':empleadoslista, 'formulario':formulario})
 
+@login_required
 def eliminar_empleado(request, id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
     empleado.delete()
     return redirect("empleados")
     
+@login_required
 def editar_empleado(request, id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
     formulario = FormularioEditarEmpleado(initial= {'nombre':empleado.nombre, 'apellido': empleado.apellido, 'edad': empleado.edad, 'sector': empleado.sector, 'sobre_mi':empleado.sobre_mi })

@@ -5,6 +5,7 @@
     {% endblock h1_header %}
     
     {% block main %}
+    <a href={% url "crear_empleado" %}>Trabajas con nosotros? Registrate en nuestra lista de Empleados!</a>
     <form action={% url "empleados" %}>
     {{formulario}}
     <input type="submit" value="Buscar">

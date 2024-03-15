@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+    
+    {% block h1_header %}
+    Perfil de {{request.user}}
+    {% endblock h1_header %}
+    {% block main %}
+    <ul>
+        <li>Nombre:{{request.user.first_name}} </li>
+        <li>Apellido:{{request.user.last_name}}</li>
+        <li>Email:{{request.user.email}}</li>
+    </ul>
+    <a class="btn btn-secondary" href="editar_perfil">Editar Perfil</a>
+    <a class="btn btn-secondary" href="cambiar_contrasenia">Cambiar Contraseña</a>
+    {% endblock main %}
