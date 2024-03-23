@@ -6,7 +6,7 @@
 
 {% block main %}
 
-<form action={% url "EditarAuto" autos.id %} method="POST">
+<form action={% url "EditarAuto" autos.id %} method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{form.media}}

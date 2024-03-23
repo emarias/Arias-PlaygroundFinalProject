@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from vehiculos.models import Autos
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from vehiculos.forms import BusquedaAuto
+from vehiculos.forms import BusquedaAuto, AutosInfo
 
 class AutosLista(ListView):
     model = Autos
@@ -32,7 +32,7 @@ class AutosLista(ListView):
 class PedirAuto(LoginRequiredMixin,CreateView):
     model = Autos
     template_name = "autos/conseguir_auto.html"
-    fields = ['modelo', 'color', 'marca', 'fecha_de_fabricacion','descripcion']
+    form_class = AutosInfo
     success_url = reverse_lazy('autos')
     
 class SacarAuto(LoginRequiredMixin, DeleteView):
@@ -40,11 +40,11 @@ class SacarAuto(LoginRequiredMixin, DeleteView):
     template_name = "autos/sacar_auto.html"
     success_url= reverse_lazy ('autos')
 
-class EditarAuto(LoginRequiredMixin, UpdateView):
+class EditarAuto(LoginRequiredMixin,UpdateView):
     model = Autos
     template_name = "autos/editar_auto.html"
-    success_url= reverse_lazy ('autos')
-    fields= ['modelo', 'color', 'marca', 'fecha_de_fabricacion','descripcion']
+    form_class = AutosInfo
+    success_url = reverse_lazy('autos')
     
 class DetallesAuto(DetailView):
     model = Autos

@@ -7,6 +7,7 @@ class Autos(models.Model):
     marca= models.CharField(max_length=30)
     fecha_de_fabricacion= models.DateField()
     descripcion= RichTextField(null=True)
+    imagen = models.ImageField(upload_to='autos_images', null=True, blank=True)
     
     def __str__(self):
         return f"{self.modelo} {self.marca} - {self.color}"

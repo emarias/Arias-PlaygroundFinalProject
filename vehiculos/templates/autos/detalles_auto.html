@@ -10,5 +10,8 @@
         <li>Color:{{autos.color}}</li>
         <li>Fecha de Fabricacion: {{autos.fecha_de_fabricacion}}</li>
         <li>Descripcion: {{autos.descripcion | safe}}</li>
+        {% if autos.imagen %}
+        <li>Imagen: <img src="{{ autos.imagen.url }}" alt="Imagen del Auto" height="300px"></li>
+    {% endif %}
     </ul>
     {% endblock main %}

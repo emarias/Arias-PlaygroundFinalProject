@@ -5,12 +5,11 @@
     {% endblock header %}
 
     {% block main %}
-    <form action={% url "PedirAuto" %} method="POST">
+    <form action={% url "PedirAuto" %} method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <table>
-            {{form.media}}
-            {{form}}
+            {{ form.as_p }}
         </table>
 
         <input type="submit" value="Pedir">
