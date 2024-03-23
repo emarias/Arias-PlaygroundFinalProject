@@ -37,23 +37,24 @@ def perfil(request):
     return render(request, "usuarios/perfil.html")
 
 def editar_perfil(request):
-    
     user = request.user
     datos_extra, _ = DatosExtra.objects.get_or_create(user=user)
-    
+
     if request.method == "POST":
         formulario = EditarPerfil(request.POST, request.FILES, instance=request.user)
         if formulario.is_valid():
             avatar = formulario.cleaned_data.get('avatar')
+            tipo_de_sangre = formulario.cleaned_data.get('tipo_de_sangre')
             if avatar:
                 datos_extra.avatar = avatar
-            
+            if tipo_de_sangre:
+                datos_extra.tipo_de_sangre = tipo_de_sangre
             datos_extra.save()
             formulario.save()
             return redirect("perfil")
     else:
-        formulario = EditarPerfil(initial={'avatar': datos_extra.avatar}, instance=request.user)
-    return render(request, "usuarios/editar_perfil.html", {"formulario":formulario})
+        formulario = EditarPerfil(initial={'avatar': datos_extra.avatar, 'tipo_de_sangre': datos_extra.tipo_de_sangre}, instance=request.user)
+    return render(request, "usuarios/editar_perfil.html", {"formulario": formulario})
 
 class CambiarContrasenia(PasswordChangeView):
     template_name = "usuarios/cambiar_contrasenia.html"

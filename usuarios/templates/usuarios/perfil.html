@@ -10,6 +10,7 @@ Perfil de {{request.user}}
     <li>Apellido:{{request.user.last_name}}</li>
     <li>Email:{{request.user.email}}</li>
     {% if request.user.datosextra.avatar %}
+    <li>Tipo de Sangre: {{request.user.datosextra.tipo_de_sangre}}</li>
     <li>Avatar: <img src="{{request.user.datosextra.avatar.url}}" alt="" height="100px"></li>
     {% endif %}
 </ul>
