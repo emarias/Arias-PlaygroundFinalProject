@@ -11,6 +11,7 @@
         <li>Edad: {{empleado.edad}}</li>
         <li>Sector: {{empleado.sector}}</li>
         <li>Sobre mi: {{empleado.sobre_mi | safe}}</li>
+        <li>Foto: <img src="{{ empleado.imagen.url }}" alt="Imagen actual" height="200px"></li>
     </ul>
     {% endblock main %}
 

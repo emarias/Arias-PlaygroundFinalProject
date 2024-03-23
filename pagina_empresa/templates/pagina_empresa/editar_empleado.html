@@ -5,15 +5,16 @@
     {% endblock header %}
 
     {% block main %}
-    <form action={% url "editar_empleado" empleado.id %} method="POST">
-        {% csrf_token %}
+<form action="{% url 'editar_empleado' empleado.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
 
-        <table>
-            {{formulario.media}}
-            {{formulario}}
-        </table>
+    <table>
+        {{ formulario.media }}
+        {{ formulario.as_table }}
+    </table>
 
-        <input type="submit" value="Editar">
-    </form>
-    {% endblock main %}
+    <input type="submit" value="Editar">
+</form>
+{% endblock main %}
+
     {% block section %}{% endblock section %}

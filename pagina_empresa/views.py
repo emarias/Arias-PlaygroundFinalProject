@@ -7,23 +7,30 @@ from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     return render(request,'pagina_empresa/inicio.html')
-    #return render(request,'base.html')
 
 @login_required
 def crear_empleado(request):
     formulario = FormularioNuevoEmpleado()
     if request.method == "POST":
-        formulario = FormularioNuevoEmpleado(request.POST)
+        print(request.POST)  
+        print(request.FILES)  
+        formulario = FormularioNuevoEmpleado(request.POST, request.FILES)
         if formulario.is_valid():
+            print(formulario.cleaned_data)  
             nombre = formulario.cleaned_data.get("nombre")
             apellido = formulario.cleaned_data.get("apellido")
             edad = formulario.cleaned_data.get("edad")
             sector = formulario.cleaned_data.get("sector")
             sobre_mi = formulario.cleaned_data.get("sobre_mi")
-            empleado = Empleado(nombre=nombre, apellido=apellido, edad=edad, sector=sector, sobre_mi=sobre_mi)
+            imagen = request.FILES.get("imagen")  
+            print(imagen) 
+            
+            empleado = Empleado(nombre=nombre, apellido=apellido, edad=edad, sector=sector, sobre_mi=sobre_mi, imagen=imagen)
             empleado.save()
             return redirect("empleados")
-    return render(request, "pagina_empresa/crear_empleado.html", {'formulario':formulario})
+    return render(request, "pagina_empresa/crear_empleado.html", {'formulario': formulario})
+
+
 
 def empleados(request):
     
@@ -40,26 +47,17 @@ def eliminar_empleado(request, id_empleado):
     empleado.delete()
     return redirect("empleados")
     
+
 @login_required
 def editar_empleado(request, id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
-    formulario = FormularioEditarEmpleado(initial= {'nombre':empleado.nombre, 'apellido': empleado.apellido, 'edad': empleado.edad, 'sector': empleado.sector, 'sobre_mi':empleado.sobre_mi })
-    
+    formulario = FormularioEditarEmpleado(instance=empleado)
     if request.method == "POST":
-        formulario = FormularioEditarEmpleado(request.POST)
+        formulario = FormularioEditarEmpleado(request.POST, request.FILES, instance=empleado)
         if formulario.is_valid():
-            nueva_info= formulario.cleaned_data
-            
-            empleado.nombre = nueva_info.get("nombre")
-            empleado.apellido = nueva_info.get("apellido")
-            empleado.edad = nueva_info.get("edad")
-            empleado.sector = nueva_info.get("sector")
-            empleado.sobre_mi = nueva_info.get("sobre_mi")
-            
-            empleado.save()
+            formulario.save()
             return redirect('empleados')
-    
-    return render(request, 'pagina_empresa/editar_empleado.html',{"empleado":empleado,"formulario":formulario})
+    return render(request, 'pagina_empresa/editar_empleado.html', {"empleado": empleado, "formulario": formulario})
     
 def ver_empleado(request,id_empleado):
     empleado = Empleado.objects.get(id=id_empleado)
